@@ -1,13 +1,13 @@
 # Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
-# the hard thinker is a bot that starts off defecting and keeps 
+# the hard majority is a bot that starts off defecting and keeps 
 # defecting as long as the opponent has defected more than they have cooperated
-# heavily influenced by Axelrod's hard Majo bot
+# heavily influenced by Axelrod's hard Majority bot
 from botBase import baseBot
 class hardThinkerBot(baseBot):
 	def __init__(self):
 		# bot inherits from base class and sets it's name
-		super().__init__("hard thinker") 
+		super().__init__("hard majority") 
 		self.opponentDefect = 0
 		self.opponentCooperate = 0
 		

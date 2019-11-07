@@ -3,23 +3,40 @@
 # main file that holds the AI tournament
 # import all the bots
 from basicBot import basicBot
-from titForTatBot import titForTatBot
+from titForTatBot import *
 from grudgerBot import grudgerBot
 from randomBot import randomBot
 from softThinkerBot import softThinkerBot
 from hardThinkerBot import hardThinkerBot
 from periodicBot import periodicBot
 from pavlov import pavlovBot
-# ** future add min and max range for rounds and add reproductive points
+from gradual import gradualBot
+from prober import proberBot
+
 class tournament:
 	cooperate = True
 	defect = False
 	# holds all strategies currently available in game
 	strategyList=[]
 	strategies =["always cooperate","always defect", "tit-for-tat", "grudger","choose randomly",
-	"soft thinker","hard thinker", "Cyclical DDC","Cyclical CCD","Cyclical CD",
-	"mean tit-for-tat", "pavlov", "cooperative tit-for-tat", "hard tit-for-tat", "slow-tit-for-tat"
-	, "gradual", "prober", "probability (set your own probability)"]
+	"soft majority","hard majority", "Cyclical DDC","Cyclical CCD","Cyclical CD",
+	"mean tit-for-tat", "pavlov", "cooperative tit-for-tat", "hard tit-for-tat", "slow tit-for-tat"
+	, "gradual", "prober", "sneaky tit-for-tat", "probability (set your own probability)"]
+	#    OppositeGrudger, -cooperate if the opponent has ever cooperated
+	#    ForgetfulGrudger, -grudger but forgets after a set amount of time 
+
+	# "appeaser" - starts cooperating and switches every time opponent defects
+	# "randomly defect", randomly cooperate
+	# tricky defect - if opponent has cooperated in the last 10 turns and has defected in the last 3 turns
+	# tricky cooperate - if opponent has cooperated in the last 3 turn and has never defected
+	
+	
+
+	# since random is just a variation on probability will probably remove the class and set as probability bot with a 50/50 chance 
+
+	# add evolution, interactive, add signal error
+	# ** future add min and max range for rounds and add reproductive points with genetic 
+	# forgiving tit-for-tat -> better in noise but more vulnerable
 	def __init__(self, rounds):		
 		self.numRounds =rounds		
 		# list of bots competing
@@ -56,11 +73,24 @@ class tournament:
 			return  titForTatBot("mean tit-for-tat", tournament.defect)
 		if botNum == 12:
 			return pavlovBot()
+		if botNum == 13:
+			return cooperativeTitForTatBot()
+		if botNum == 14:
+			return hardTitForTatBot()
+		if botNum == 15:
+			return slowTitForTatBot()
+		if botNum == 16:
+			return gradualBot()
+		if botNum == 17:
+			return proberBot()
+		if botNum == 18:
+			return sneakyTitForTatBot()
+
 	# create round for the tournament
 	def setUp(self):
 		print("Welcome to the strategy choosing Menu.\n")
-		test ={1,2,3,4,5,6,7,8,9,10,11,12,-1}
-		testNum = [1,1,5,0,0,10,0,0,0,0,0,5]
+		test =    {1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 15, 16, 17,18,-1}
+		testNum = [00,00,10,00,00,00,00,10,10,10,00, 00, 00, 00, 00, 00, 10, 10]
 		while(True):
 			tournament.printStrategyMenu(self)
 			# pick the strategy you want to enroll
@@ -74,10 +104,53 @@ class tournament:
 			for i in range(numOfBots):
 				bot = tournament.getBot(botNum) #get the using that strategy
 				self.botList.append(bot)
+	def humanPlay(self):
+		print("Welcome to the strategy choosing Menu.\n")
+		tournament.printStrategyMenu(self)
+		botNum= int(input("Please choose your opponent strategy\n"))
+		if(botNum <=-1 or botNum>len(self.strategies)):
+			print("Invalid strategy... Now exiting")
+			return
+		bot = tournament.getBot(botNum)
+		humanMoves =[]
+		humanYears =0
+		for r in range(self.numRounds):
+			humanMove = int(input("Please pick your move 1.Cooperate 2.Betray"))
+			if(humanMove ==1):
+				move1 = tournament.cooperate
+			else:
+				move1 = tournament.defect
+			move2 = bot.getMove(humanMoves)
+			humanMoves.append(move1)
+
+			#both cooperate they both go to jail for 2 years
+			if( move1 == tournament.cooperate and move2 == tournament.cooperate): 
+				print("You both cooperated you get to go to jail for 2 years!")
+				humanYears+= 2
+				bot.addYears(2)
+
+			#both defect they both go to jail for 5 years
+			if( move1 == tournament.defect and move2 == tournament.defect): 
+				print("You both betrayed each other you get to go to jail for 5 years...")
+				humanYears+= 5
+				bot.addYears(5)
+
+			# if bot1 cooperates and bot 2 defects then bot1 
+			# goes to jail for 10 years while bot 2 gets to walk
+			if( move1 == tournament.cooperate and move2 == tournament.defect): 
+				print("You got betrayed... You got sent to jail for 10 years while the bot walked free :(")
+				humanYears+= 10
+				bot.addYears(0)
+			# same as third scenario in reverse
+			if( move1 == tournament.defect and move2 == tournament.cooperate): 
+				print("Your plan worked! You get to walk free and the bot got 10 years in prison O.O")
+				humanYears+= 0
+				bot.addYears(10)
+		print("At the end of the you got " + str(humanYears) + " years in jail and the bot got "+bot.getYears() + " years")
 
 	def faceOff(self):
 		for i in range(len(self.botList)):
-			for j in range(len(self.botList)):
+			for j in range(i, len(self.botList)):
 				# list of bot moves for bots that need memory
 				bot1Moves =[]
 				bot2Moves =[]
@@ -124,6 +197,7 @@ class tournament:
 mainTournament = tournament(10)
 mainTournament.setUp()
 mainTournament.faceOff()
+# mainTournament.humanPlay()
 mainTournament.displayResult()
 
 

@@ -1,13 +1,13 @@
 # Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
-# the soft thinker is a bot that starts off cooperating and keeps 
+# the soft majority is a bot that starts off cooperating and keeps 
 # cooperating as long as the opponent has cooperated more than they have defected
 # heavily influenced by Axelrod's soft Majo bot
 from botBase import baseBot
 class softThinkerBot(baseBot):
 	def __init__(self):
 		# bot inherits from base class and sets it's name
-		super().__init__("soft thinker") 
+		super().__init__("soft majority") 
 		self.opponentDefect = 0
 		self.opponentCooperate = 0
 	def getMove(self,opponentMoves) -> bool:

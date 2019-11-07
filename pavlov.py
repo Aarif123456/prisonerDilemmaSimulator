@@ -13,9 +13,12 @@ class pavlovBot(baseBot):
 		if(len(opponentMoves)==0): #for first move cooperate
 			self.lastMove = baseBot.cooperate
 		else:
-			# if last move match then cooperate
+			# If both defected it will try to forgive.
+			# So, it see see-saws between tit-for-tat and forgiving. We could make this strategy
+			# more advanced by remembering more
 			if self.lastMove == opponentMoves[-1]: 
 				self.lastMove = baseBot.cooperate
+			# lastly if it cooperated and other defected switch to defect or if other cooperated and it defected then keep defecting
 			else:
 				self.lastMove = baseBot.defect			
 		return self.lastMove
