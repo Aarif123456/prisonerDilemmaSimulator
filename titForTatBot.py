@@ -13,10 +13,10 @@ class titForTatBot(baseBot):
 	def getMove(self,opponentMoves) -> bool:
 		if(len(opponentMoves)==0): #for first move return 
 			return self.startingMove
-		else:
-			return opponentMoves[-1]
+		# otherwise mirror
+		return opponentMoves[-1]
 
-#bot that acts like tit-for -tat but gives an extra chance to forgive
+#bot that acts like tit-for -tat but gives an extra chance to forgive also called tit for 2 tats
 class cooperativeTitForTatBot(baseBot):
 	def __init__(self):
 		# bot inherits from base class and sets it's name
@@ -93,3 +93,40 @@ class sneakyTitForTatBot(baseBot):
 	def newRound(self):
 		self.tricked = False
 		self.trickRound = random.randint(0,5)
+
+# forgiving tit for tat is a bot that will play tit-for-tat toward anyone who 
+# has defected more than set probability(10% by default) of the time otherwise it just cooperates
+# can play with what percentage is best
+class forgivingTitForTatBot(baseBot):
+	def __init__(self, p:float):
+		# bot inherits from base class and sets it's name
+		super().__init__("forgiving tit-for-tat") 
+		self.opponentDefect = 0
+		self.probability =p
+	def getMove(self,opponentMoves) -> bool:
+		if(len(opponentMoves)==0): #for first move return 
+			return baseBot.cooperate
+		if opponentMoves[-1] == baseBot.defect:
+			self.opponentDefect += 1
+		# more than set probability mirror
+		if self.opponentDefect/len(opponentMoves) >= self.probability:
+			return opponentMoves[-1] 
+		return baseBot.cooperate
+
+	def newRound(self):
+		self.opponentDefect = 0
+
+# generous plays tit-for tat except for a small probability that it randomly forgive by default a 5% chance
+class generousTitForTatBot(baseBot):
+	def __init__(self, p:float):
+		# bot inherits from base class and sets it's name
+		super().__init__("generous tit-for-tat") 
+		self.probability =p
+
+	def getMove(self,opponentMoves) -> bool:
+		if(len(opponentMoves)==0): #for first move return 
+			return baseBot.cooperate
+		if opponentMoves[-1] == baseBot.defect and random.uniform(0,100)<self.probability:
+			return baseBot.cooperate
+		return opponentMoves[-1] 
+

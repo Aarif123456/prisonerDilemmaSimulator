@@ -4,15 +4,17 @@
 # import all the bots
 from basicBot import basicBot
 from titForTatBot import *
-from grudgerBot import grudgerBot
+from grudgerBot import *
 from randomBot import randomBot
-from softThinkerBot import softThinkerBot
-from hardThinkerBot import hardThinkerBot
+from majority import *
 from periodicBot import periodicBot
 from pavlov import pavlovBot
 from gradual import gradualBot
 from prober import proberBot
+from deterministic import *
 
+# import random to add in noise
+import random
 class tournament:
 	cooperate = True
 	defect = False
@@ -21,7 +23,8 @@ class tournament:
 	strategies =["always cooperate","always defect", "tit-for-tat", "grudger","choose randomly",
 	"soft majority","hard majority", "Cyclical DDC","Cyclical CCD","Cyclical CD",
 	"mean tit-for-tat", "pavlov", "cooperative tit-for-tat", "hard tit-for-tat", "slow tit-for-tat"
-	, "gradual", "prober", "sneaky tit-for-tat", "probability (set your own probability)"]
+	, "gradual", "prober", "sneaky tit-for-tat","forgetful grudger","forgiving tit for tat", 
+	 "generous tit-for-tat", "probability (set your own probability)"]
 	#    OppositeGrudger, -cooperate if the opponent has ever cooperated
 	#    ForgetfulGrudger, -grudger but forgets after a set amount of time 
 
@@ -37,10 +40,11 @@ class tournament:
 	# add evolution, interactive, add signal error
 	# ** future add min and max range for rounds and add reproductive points with genetic 
 	# forgiving tit-for-tat -> better in noise but more vulnerable
-	def __init__(self, rounds):		
+	def __init__(self, rounds:int):		
 		self.numRounds =rounds		
 		# list of bots competing
 		self.botList =[]
+		self.noise = 0.0
 
 	@staticmethod
 	def printStrategyMenu(self):
@@ -60,9 +64,9 @@ class tournament:
 		if botNum == 5:
 			return randomBot()
 		if botNum == 6:
-			return softThinkerBot()
+			return softMajorityBot()
 		if botNum == 7:
-			return hardThinkerBot()
+			return hardMajorityBot()
 		if botNum == 8:
 			return periodicBot("Cyclical DDC", [tournament.defect, tournament.defect, tournament.cooperate])
 		if botNum == 9:
@@ -85,12 +89,23 @@ class tournament:
 			return proberBot()
 		if botNum == 18:
 			return sneakyTitForTatBot()
+		if botNum == 19:
+			return forgetfulGrudgerBot(10) # 10 rounds to forget by default
+		if botNum == 20:
+			return forgivingTitForTatBot(0.1) #set to 10% by default
+		if botNum == 21:
+			return generousTitForTatBot(0.05) #set to random forgiveness to 5%
+		if(botNum !=-1): # if not a valid choice and not -1 raise
+			raise Exception('Invalid choice ')
+
 
 	# create round for the tournament
+	def setNoise(self, n:float):
+		self.noise =n
 	def setUp(self):
 		print("Welcome to the strategy choosing Menu.\n")
 		test =    {1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 15, 16, 17,18,-1}
-		testNum = [00,00,10,00,00,00,00,10,10,10,00, 00, 00, 00, 00, 00, 10, 10]
+		testNum = [00,00,10,00,00,00,00,10,10,10,00, 00, 00, 00, 00, 00, 10, 0]
 		while(True):
 			tournament.printStrategyMenu(self)
 			# pick the strategy you want to enroll
@@ -150,12 +165,10 @@ class tournament:
 
 	def faceOff(self):
 		for i in range(len(self.botList)):
-			for j in range(i, len(self.botList)):
+			for j in range(i+1, len(self.botList)):
 				# list of bot moves for bots that need memory
 				bot1Moves =[]
 				bot2Moves =[]
-				if(i==j):
-					continue
 				strategy1 = self.botList[i]
 				strategy2 = self.botList[j]
 				# for strategies that change variables during the round reset them
@@ -164,6 +177,17 @@ class tournament:
 				for r in range(self.numRounds):
 					move1 = strategy1.getMove(bot2Moves)
 					move2 = strategy2.getMove(bot1Moves)
+					# create noise
+					if(random.uniform(0,100) <self.noise):
+						if(random.randint(0,1)==0):
+							move1 = False
+						else:
+							move1 = True
+					if(random.uniform(0,100) <self.noise):
+						if(random.randint(0,1)==0):
+							move2 = False
+						else:
+							move2 = True
 					bot1Moves.append(move1)
 					bot2Moves.append(move2)
 					#both cooperate they both go to jail for 2 years
@@ -195,9 +219,9 @@ class tournament:
 			print(bot.getName()+" spent " + bot.getYears() + " in prison\n")
 
 mainTournament = tournament(10)
-mainTournament.setUp()
-mainTournament.faceOff()
-# mainTournament.humanPlay()
+# mainTournament.setUp()
+# mainTournament.faceOff()
+mainTournament.humanPlay()
 mainTournament.displayResult()
 
 
