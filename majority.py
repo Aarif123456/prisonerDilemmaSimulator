@@ -6,7 +6,7 @@ from botBase import baseBot
 # the hard majority is a bot that starts off defecting and keeps 
 # defecting as long as the opponent has defected more than they have cooperated
 # heavily influenced by Axelrod's hard Majority bot
-class historyBot(baseBot)
+class historyBot(baseBot):
 	def __init__(self, name):
 		# bot inherits from base class and sets it's name
 		super().__init__(name) 
