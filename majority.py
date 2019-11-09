@@ -40,7 +40,7 @@ class forgetfulMajorityBot(historyBot):
 
 
 class hardMajorityBot(historyBot): 
-	def __init__(self, name):
+	def __init__(self):
 		# bot inherits from base class and sets it's name
 		super().__init__("hard majority") 
 		

@@ -15,6 +15,8 @@ from deterministic import *
 
 # import random to add in noise
 import random
+# math for calculating mean and standard deviation
+import math
 class tournament:
 	cooperate = True
 	defect = False
@@ -47,9 +49,9 @@ class tournament:
 		self.noise = 0.0
 
 	@staticmethod
-	def printStrategyMenu(self):
-		for i in range(len(self.strategies)):
-			print(str(i+1) +": "+ self.strategies[i] +"\n")
+	def printStrategyMenu():
+		for i in range(len(tournament.strategies)):
+			print(str(i+1) +": "+ tournament.strategies[i] +"\n")
 
 	@staticmethod
 	def getBot(botNum : int):
@@ -104,26 +106,27 @@ class tournament:
 		self.noise =n
 	def setUp(self):
 		print("Welcome to the strategy choosing Menu.\n")
-		test =    {1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 15, 16, 17,18,-1}
-		testNum = [00,00,10,00,00,00,00,10,10,10,00, 00, 00, 00, 00, 00, 10, 0]
+		# uncomment to test
+		# test =    {1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 15, 16, 17,18,-1}
+		# testNum = [5,5,5,10,10,10,10,10,10,10,10, 10, 10, 10, 10, 10, 10, 10]
 		while(True):
-			tournament.printStrategyMenu(self)
+			tournament.printStrategyMenu()
 			# pick the strategy you want to enroll
-			# botNum= int(input("Please the number associated with the strategy that you wish to enter in the tournament or -1 to leave the choosing menu\n"))
-			botNum =test.pop()
-			if(botNum <=-1 or botNum>len(self.strategies)):
+			botNum= int(input("Please the number associated with the strategy that you wish to enter in the tournament or -1 to leave the choosing menu\n"))
+			# botNum =test.pop() # for quick testing
+			if(botNum <=-1 or botNum>len(tournament.strategies)):
 				break
 			# choose how many bots using the chosen strategies should be enrolled in the tournament
-			# numOfBots = int(input("How many bots do you want to enter that play with the "+self.strategies[botNum-1]+" strategy?\n"))
-			numOfBots = testNum[botNum-1]
+			numOfBots = int(input("How many bots do you want to enter that play with the "+tournament.strategies[botNum-1]+" strategy?\n"))
+			# numOfBots = testNum[botNum-1] # for quick testing
 			for i in range(numOfBots):
 				bot = tournament.getBot(botNum) #get the using that strategy
 				self.botList.append(bot)
 	def humanPlay(self):
 		print("Welcome to the strategy choosing Menu.\n")
-		tournament.printStrategyMenu(self)
+		tournament.printStrategyMenu()
 		botNum= int(input("Please choose your opponent strategy\n"))
-		if(botNum <=-1 or botNum>len(self.strategies)):
+		if(botNum <=-1 or botNum>len(tournament.strategies)):
 			print("Invalid strategy... Now exiting")
 			return
 		bot = tournament.getBot(botNum)
@@ -211,7 +214,36 @@ class tournament:
 						strategy2.addYears(10)
 	# ** sort bot from best to worse performing
 	def sortBot(self):
-		print("")
+		self.botList.sort(key=lambda bot: bot.getYears())
+
+	def geneticAlgorithm(self):
+		sumYears = 0
+		standardDeviation = 0.00
+		variance = 0.00
+		mean = 0.00
+		if(self.numRounds<1):
+			raise Exception("No bots faced off against each other cannot complete genetic algorithm")
+			return
+		# get mean
+		for bot in self.botList:
+			y = int(bot.getYears())
+			sumYears += y
+		mean = sumYears/len(self.botList)
+		#get variance
+		for bot in self.botList:
+			y = int(bot.getYears())
+			variance += pow(y-mean,2)			
+		variance /= len(self.botList)
+		standardDeviation = math.sqrt(variance)		
+			
+		newBotList = []
+		for bot in self.botList:
+			y = int(bot.getYears())
+			numKid = -round((y - mean)/standardDeviation)
+			for i in range(numKid):
+				newBotList.append(bot.getChild())
+		self.numRounds = 0 
+		self.botList = newBotList 
 
 	def displayResult(self):
 		self.sortBot()
@@ -219,9 +251,12 @@ class tournament:
 			print(bot.getName()+" spent " + bot.getYears() + " in prison\n")
 
 mainTournament = tournament(10)
-# mainTournament.setUp()
-# mainTournament.faceOff()
-mainTournament.humanPlay()
+mainTournament.setUp()
+mainTournament.faceOff()
+# mainTournament.humanPlay()
+mainTournament.displayResult()
+print("running a genetic algorithms round")
+mainTournament.geneticAlgorithm()
 mainTournament.displayResult()
 
 
