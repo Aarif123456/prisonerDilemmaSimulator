@@ -195,6 +195,7 @@ class tournament:
         DDC = []
         CCD = []
         CD = []
+        meanTFT = []
         pavlov = []
         cooperativeTFT = []
         hardTFT = []
@@ -208,64 +209,207 @@ class tournament:
         for bot in self.botList:
             print(bot.getName() + " spent " + bot.getYears() + " in prison\n")
             if(bot.getName() == tournament.strategies[0]) :
-                alwaysCooperate.append(bot.getYears())
+                alwaysCooperate.append(int(bot.getYears()))
                 if 'Always Cooperate' not in labels :
                     labels.append('Always Coorperate')
 
             elif(bot.getName() == tournament.strategies[1]) :
-                alwaysDefect.append(bot.getYears())
+                alwaysDefect.append(int(bot.getYears()))
                 if 'Always Defect' not in labels :
                     labels.append('Always Defect')
 
             elif(bot.getName() == tournament.strategies[2]) :
-                traditionalTFT.append(bot.getYears())
+                traditionalTFT.append(int(bot.getYears()))
                 if 'Tit-For-Tat' not in labels :
                     labels.append('Tit-For-Tat')
 
             elif(bot.getName() == tournament.strategies[3]) :
-                grudgerTraditional.append(bot.getYears())
+                grudgerTraditional.append(int(bot.getYears()))
                 if 'Traditional Grudger' not in labels :
                     labels.append('Traditional Grudger')
 
             elif(bot.getName() == tournament.strategies[4]) :
-                chooseRandomly.append(bot.getYears())
+                chooseRandomly.append(int(bot.getYears()))
                 if 'Random' not in labels :
                     labels.append('Random')
+                       
+            elif(bot.getName() == tournament.strategies[5]) :
+                softMajority.append(int(bot.getYears()))
+                if 'Soft Majority' not in labels :
+                    labels.append('Soft Majority')
+
+            elif(bot.getName() == tournament.strategies[6]) :
+                hardMajority.append(int(bot.getYears()))
+                if 'Hard Majority' not in labels :
+                    labels.append('Hard Majority')
+            
+            elif(bot.getName() == tournament.strategies[7]) :
+                DDC.append(int(bot.getYears()))
+                if 'DDC' not in labels :
+                    labels.append('DDC')
+
+            elif(bot.getName() == tournament.strategies[8]) :
+                CCD.append(int(bot.getYears()))
+                if 'CCD' not in labels :
+                    labels.append('CCD')
+
+            elif(bot.getName() == tournament.strategies[9]) :
+                CD.append(int(bot.getYears()))
+                if 'CD' not in labels :
+                    labels.append('CD')
+
+            elif(bot.getName() == tournament.strategies[10]) :
+                meanTFT.append(int(bot.getYears()))
+                if 'Mean TFT' not in labels :
+                    labels.append('Mean TFT')
+
+            elif(bot.getName() == tournament.strategies[11]) :
+                pavlov.append(int(bot.getYears()))
+                if 'Pavlov' not in labels :
+                    labels.append('Pavlov')
+
+            elif(bot.getName() == tournament.strategies[12]) :
+                cooperativeTFT.append(int(bot.getYears()))
+                if 'Cooperative TFT' not in labels :
+                    labels.append('Cooperative TFT')
+
+            elif(bot.getName() == tournament.strategies[13]) :
+                hardTFT.append(int(bot.getYears()))
+                if 'Hard TFT' not in labels :
+                    labels.append('Hard TFT')
+
+            elif(bot.getName() == tournament.strategies[14]) :
+                slowTFT.append(int(bot.getYears()))
+                if 'Slow TFT' not in labels :
+                    labels.append('Slow TFT')
+
+            elif(bot.getName() == tournament.strategies[15]) :
+                gradual.append(int(bot.getYears()))
+                if 'Gradual' not in labels :
+                    labels.append('Gradual')
+
+            elif(bot.getName() == tournament.strategies[16]) :
+                prober.append(int(bot.getYears()))
+                if 'Prober' not in labels :
+                    labels.append('Prober')
+
+            elif(bot.getName() == tournament.strategies[17]) :
+                sneakyTFT.append(int(bot.getYears()))
+                if 'Sneaky TFT' not in labels :
+                    labels.append('Sneaky TFT')
+
+            elif(bot.getName() == tournament.strategies[18]) :
+                grudgerForgetful.append(int(bot.getYears()))
+                if 'Forgetful Grudger' not in labels :
+                    labels.append('Forgetful Grudger')
+
+            elif(bot.getName() == tournament.strategies[19]) :
+                generousTFT.append(int(bot.getYears()))
+                if 'Generous TFT' not in labels :
+                    labels.append('Generous TFT')
+
             else :
                 print("Not Working")
 
+
+        # Getting the minimum and maximum years spent in prison for every subset of strategies
+
+        #DO NOT HAVE
+        if labels.__contains__("Always Cooperate") :
+            minYears.append(min(alwaysCooperate))
+            maxYears.append(max(alwaysCooperate))
+        #DO NOT HAVE
+        if labels.__contains__("Always Defect") :
+            minYears.append(min(alwaysDefect))
+            maxYears.append(max(alwaysDefect))
+
         if labels.__contains__("Tit-For-Tat") :
             minYears.append(min(traditionalTFT))
-            print(str(minYears.__len__()) + ",min!!!")
             maxYears.append(max(traditionalTFT))
-            print(str(maxYears.__len__()) + ",max!!!")
+        
         if labels.__contains__("Traditional Grudger") :
             minYears.append(min(grudgerTraditional))
-            print(str(minYears.__len__()) + ",min???")
             maxYears.append(max(grudgerTraditional))
-            print(str(maxYears.__len__()) + ",max???")
-
-        for minyear in minYears :
-            print(minyear + ",!!! ")
         
-
-        for maxyear in maxYears :
-            print(maxyear + ",??? ")
+        #DO NOT HAVE
+        if labels.__contains__("Random") :
+            minYears.append(min(chooseRandomly))
+            maxYears.append(max(chooseRandomly))
         
-
-        for label in labels :
-            print(label + ", ")
+        if labels.__contains__("Soft Majority") :
+            minYears.append(min(softMajority))
+            maxYears.append(max(softMajority))
         
-        # labels = ['G1', 'G2', 'G3', 'G4', 'G5']
-        men_means = [20, 20]
-        women_means = [20, 20]
+        if labels.__contains__("Hard Majority") :
+            minYears.append(min(hardMajority))
+            maxYears.append(max(hardMajority))
+        
+        if labels.__contains__("DDC") :
+            minYears.append(min(DDC))
+            maxYears.append(max(DDC))
+        
+        if labels.__contains__("CCD") :
+            minYears.append(min(CCD))
+            maxYears.append(max(CCD))
+        
+        if labels.__contains__("CD") :
+            minYears.append(min(CD))
+            maxYears.append(max(CD))
+
+        if labels.__contains__("Mean TFT") :
+            minYears.append(min(meanTFT))
+            maxYears.append(max(meanTFT))
+        
+        if labels.__contains__("Pavlov") :
+            minYears.append(min(pavlov))
+            maxYears.append(max(pavlov))
+        
+        if labels.__contains__("Cooperative TFT") :
+            minYears.append(min(cooperativeTFT))
+            maxYears.append(max(cooperativeTFT))
+        
+        if labels.__contains__("Hard TFT") :
+            minYears.append(min(hardTFT))
+            maxYears.append(max(hardTFT))
+        
+        #DO NOT HAVE
+        if labels.__contains__("Slow TFT") :
+            minYears.append(min(slowTFT))
+            maxYears.append(max(slowTFT))
+        
+        #DO NOT HAVE
+        if labels.__contains__("Gradual") :
+            minYears.append(min(gradual))
+            maxYears.append(max(gradual))
+
+        #DO NOT HAVE
+        if labels.__contains__("Prober") :
+            minYears.append(min(prober))
+            maxYears.append(max(prober))
+        
+        #DO NOT HAVE
+        if labels.__contains__("Sneaky TFT") :
+            minYears.append(min(sneakyTFT))
+            maxYears.append(max(sneakyTFT))
+
+        #HAVE - DOESN'T WORK IN GUI
+        if labels.__contains__("Forgetful Grudger") :
+            minYears.append(min(grudgerForgetful))
+            maxYears.append(max(grudgerForgetful))
+        
+        #DO NOT HAVE
+        if labels.__contains__("Generous TFT") :
+            minYears.append(min(generousTFT))
+            maxYears.append(max(generousTFT))
+
+
 
         x = np.arange(len(labels))  # the label locations
         width = 0.35  # the width of the bars
 
         fig, ax = plt.subplots()
-        rects1 = ax.bar(x - width/2, men_means, width, label='Min Years')
-        rects2 = ax.bar(x + width/2, women_means, width, label='Max Years')
+        rects1 = ax.bar(x - width/2, minYears, width, label='Min Years')
+        rects2 = ax.bar(x + width/2, maxYears, width, label='Max Years')
 
         # Add some text for labels, title and custom x-axis tick labels, etc.
         ax.set_ylabel('# of Years')
@@ -278,6 +422,7 @@ class tournament:
             """Attach a text label above each bar in *rects*, displaying its height."""
             for rect in rects:
                 height = rect.get_height()
+                print("This is the height = " + str(height))
                 ax.annotate('{}'.format(height),
                             xy=(rect.get_x() + rect.get_width() / 2, height),
                             xytext=(0, 3),  # 3 points vertical offset
