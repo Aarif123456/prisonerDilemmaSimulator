@@ -47,29 +47,10 @@ class tournament:
 
     strategies = ["always cooperate", "always defect", "tit-for-tat", "grudger", "choose randomly",
                   "soft majority", "hard majority", "Cyclical DDC", "Cyclical CCD", "Cyclical CD",
-                  "mean tit-for-tat", "pavlov", "cooperative tit-for-tat", "hard tit-for-tat", "slow tit-for-tat", "gradual", "prober", "sneaky tit-for-tat", "forgetful grudger", "forgiving tit for tat",
-<<<<<<< HEAD
-                  "generous tit-for-tat", "blahn"]
-
-    #    OppositeGrudger, -cooperate if the opponent has ever cooperated 
-    #    ForgetfulGrudger, -grudger but forgets after a set amount of time
-
-    # "appeaser" - starts cooperating and switches every time opponent defects
-    # "randomly defect", randomly cooperate
-    # tricky defect - if opponent has cooperated in the last 10 turns and has defected in the last 3 turns
-    # tricky cooperate - if opponent has cooperated in the last 3 turn and has never defected
-
-    # since random is just a variation on probability will probably remove the class and set as probability bot with a 50/50 chance
-
-    # add evolution, interactive, add signal error
-    # ** future add min and max range for rounds and add reproductive points with genetic
-    # forgiving tit-for-tat -> better in noise but more vulnerable
-    def __init__(self, rounds: int, noiseVal: int):
-=======
+                  "mean tit-for-tat", "pavlov", "cooperative tit-for-tat", "hard tit-for-tat", "slow tit-for-tat", "gradual", "prober", "sneaky tit-for-tat", "forgetful grudger", "forgiving tit-for-tat",
                   "generous tit-for-tat", "probability (set your own probability)"]   
 
-    def __init__(self, rounds: int):
->>>>>>> 4082ecf8571ca659c3a975f434fcbed3db24e912
+    def __init__(self, rounds: int, noiseVal: int):
         self.numRounds = rounds
         # list of bots competing
         self.botList = []
@@ -169,12 +150,12 @@ class tournament:
             return proberSlider.get()
         if sliderNum == 18:
             return tftSneakySlider.get()
-        if sliderNum == 19:
-            return grudgerForgetSlider.get()
+       # if sliderNum == 19:
+        #    return grudgerForgetSlider.get()
         if sliderNum == 20:
             return tftForgiveSlider.get()
-        if sliderNum == 21:
-            return tftGenerousSlider.get()
+       # if sliderNum == 21:
+        #    return tftGenerousSlider.get()
         else:
             return 0
 
@@ -600,8 +581,6 @@ class tournament:
         mainTournament.faceOff()
         mainTournament.displayResult()
 
-
-# Samantha Robson
 # COMP 3710 Final AI Project
 # Prisoner's Dilemma Simulator GUI
 
@@ -666,6 +645,22 @@ tftCoopSlider.pack()
 tftHardSlider = strategySlider(master=tftHard, label="Hard")
 tftHardSlider.pack()
 
+tradInfoButton = infoButton(master=tftTrad, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+tradInfoButton.pack()
+
+meanInfoButton = infoButton(master=tftMean, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+meanInfoButton.pack()
+
+coopInfoButton = infoButton(master=tftCoop, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+coopInfoButton.pack()
+
+hardInfoButton = infoButton(master=tftHard, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+hardInfoButton.pack()
+
 # Periodic Interface
 
 periodicLabel = Label(left, text="Periodic")
@@ -691,6 +686,18 @@ ccdSlider.pack()
 cdSlider = strategySlider(master=periodicCD, label='Cooperate Defect')
 cdSlider.pack()
 
+DDCInfoButton = infoButton(master=periodicDDC, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+DDCInfoButton.pack()
+
+CCDInfoButton = infoButton(master=periodicCCD, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+CCDInfoButton.pack()
+
+CDInfoButton = infoButton(master=periodicCD, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+CDInfoButton.pack()
+
 # Majority Bots
 
 majorityLabel = Label(left, text="Majority")
@@ -711,15 +718,29 @@ majHardSlider.pack()
 majSoftSlider = strategySlider(master=majSoft, label='Soft')
 majSoftSlider.pack()
 
+majHardInfoButton = infoButton(master=majHard, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+majHardInfoButton.pack()
+
+majSoftInfoButton = infoButton(master=majSoft, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+majSoftInfoButton.pack()
+
 # Pavlov Interface
 
-pavlovLabel = LabelFrame(left, text="Pavlov", width=notebookWidth)
+pavlovLabel = Label(left, text="Pavlov")
 pavlovLabel.pack()
 
-pavlovSlider = strategySlider(master=pavlovLabel, label='Pavlov')
+pavlov = Notebook(left, width=notebookWidth)
+pavlov.pack()
+Pavlov = Frame(pavlov)
+
+pavlov.add(Pavlov, text = "Pavlov")
+
+pavlovSlider = strategySlider(master=Pavlov, label='Pavlov')
 pavlovSlider.pack()
 
-pavInfoButton = infoButton(master=pavlovLabel, command=lambda: info_window(
+pavInfoButton = infoButton(master=Pavlov, command=lambda: info_window(
     "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
 pavInfoButton.pack()
 
@@ -731,27 +752,31 @@ grudgerLabel.pack()
 grudger = Notebook(left, width=notebookWidth)
 grudger.pack()
 grudgerTrad = Frame(grudger)
-grudgerForget = Frame(grudger)
+#grudgerForget = Frame(grudger)
 
 grudger.add(grudgerTrad, text="Traditional")
-grudger.add(grudgerForget, text="Forgetful")
+#grudger.add(grudgerForget, text="Forgetful")
 
 grudgerSlider = strategySlider(master=grudgerTrad, label='Grudger')
 grudgerSlider.pack()
 
+grudgeInfoButton = infoButton(master=grudgerTrad, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+grudgeInfoButton.pack()
+
 # Forgetful Grudger
 
-grudgerForgetSlider = strategySlider(
-    master=grudgerForget, label='Forgetful Grudger')
-grudgerForgetSlider.pack()
+#grudgerForgetSlider = strategySlider(
+ #   master=grudgerForget, label='Forgetful Grudger')
+#grudgerForgetSlider.pack()
 
 # Forgetful memory
 
-forgetMemoryLabel = Label(grudgerForget, text="Previous Rounds Remembered")
-forgetMemoryLabel.pack()
-grudgerForgetMemoryEntry = Spinbox(grudgerForget, from_=0, to=100, width=4)
+#forgetMemoryLabel = Label(grudgerForget, text="Previous Rounds Remembered")
+#forgetMemoryLabel.pack()
+#grudgerForgetMemoryEntry = Spinbox(grudgerForget, from_=0, to=100, width=4)
 # TODO Connect to memory value
-grudgerForgetMemoryEntry.pack()
+#grudgerForgetMemoryEntry.pack()
 
 
 
@@ -765,12 +790,12 @@ tft2.pack()
 tftSlow = Frame(tft2)
 tftSneaky = Frame(tft2)
 tftForgive = Frame(tft2)
-tftGenerous = Frame(tft2)
+#tftGenerous = Frame(tft2)
 
 tft2.add(tftSlow, text='Slow')
 tft2.add(tftSneaky, text='Sneaky')
 tft2.add(tftForgive, text='Forgiving')
-tft2.add(tftGenerous, text='Generous')
+#tft2.add(tftGenerous, text='Generous')
 
 tftSlowSlider = strategySlider(master=tftSlow, label="Slow")
 tftSlowSlider.pack()
@@ -781,8 +806,20 @@ tftSneakySlider.pack()
 tftForgiveSlider = strategySlider(master=tftForgive, label="Forgiving")
 tftForgiveSlider.pack()
 
-tftGenerousSlider = strategySlider(master=tftGenerous, label="Generous")
-tftGenerousSlider.pack()
+#tftGenerousSlider = strategySlider(master=tftGenerous, label="Generous")
+#tftGenerousSlider.pack()
+
+slowInfoButton = infoButton(master=tftSlow, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+slowInfoButton.pack()
+
+sneakyInfoButton = infoButton(master=tftSneaky, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+sneakyInfoButton.pack()
+
+forgiveInfoButton = infoButton(master=tftForgive, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+forgiveInfoButton.pack()
 
 # Always Bots
 
@@ -803,39 +840,65 @@ allDefectSlider.pack()
 allCooperateSlider = strategySlider(master=allCooperate, label='Cooperate')
 allCooperateSlider.pack()
 
+defectInfoButton = infoButton(master=allDefect, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+defectInfoButton.pack()
+
+cooperateInfoButton = infoButton(master=allCooperate, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+cooperateInfoButton.pack()
+
 # randomBot
 
-randomLabel = LabelFrame(right, text="Random", width=notebookWidth)
+randomLabel = Label(right, text="Random")
 randomLabel.pack()
 
-randomSlider = strategySlider(master=randomLabel, label='Random')
+rand = Notebook(right, width=notebookWidth)
+rand.pack()
+Rand = Frame(rand)
+
+rand.add(Rand, text = "Random")
+
+randomSlider = strategySlider(master=Rand, label='Random')
 randomSlider.pack()
 
-ranInfoButton = infoButton(master=randomLabel, command=lambda: info_window(
+ranInfoButton = infoButton(master=Rand, command=lambda: info_window(
     "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
 ranInfoButton.pack()
 
 # gradualBot
 
-gradualLabel = LabelFrame(right, text="Gradual", width=notebookWidth)
+gradualLabel = Label(right, text="Gradual")
 gradualLabel.pack()
 
-gradualSlider = strategySlider(master=gradualLabel, label='Gradual')
+gradual = Notebook(right, width=notebookWidth)
+gradual.pack()
+Gradual = Frame(gradual)
+
+gradual.add(Gradual, text = "Gradual")
+
+gradualSlider = strategySlider(master=Gradual, label='Gradual')
 gradualSlider.pack()
 
-gradInfoButton = infoButton(master=gradualLabel, command=lambda: info_window(
+gradInfoButton = infoButton(master=Gradual, command=lambda: info_window(
     "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
 gradInfoButton.pack()
 
 # proberBot
 
-proberLabel = LabelFrame(right, text="Prober", width=notebookWidth)
+proberLabel = Label(right, text="Prober")
 proberLabel.pack()
 
-proberSlider = strategySlider(master=proberLabel, label='Prober')
+prober = Notebook(right, width=notebookWidth)
+prober.pack()
+Prober = Frame(prober)
+
+prober.add(Prober, text = "Prober")
+
+proberSlider = strategySlider(master=Prober, label='Prober')
 proberSlider.pack()
 
-proInfoButton = infoButton(master=proberLabel, command=lambda: info_window(
+proInfoButton = infoButton(master=Prober, command=lambda: info_window(
     "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
 proInfoButton.pack()
 
@@ -865,29 +928,11 @@ def limitStrategies(val):
         if (sliderCount >= 5) :
             if (v == 0) :
                 print ("This is what happens when v == 0:")
-                
-# Run Simulation, Select Rounds, Noise Sliders/Buttons
 
-roundsLabel = Label(root, text="Rounds to Play (Max 10):")
-roundsLabel.pack()
-roundsEntry = Spinbox(root, from_=1, to=10, width=4)
-roundsEntry.pack()
-
-runButton = Button(root, text="Run Simulation",
-                   command=lambda: tournament.runTournament())  # add command
-runButton.pack()
-
-noiseSlider = strategySlider(label="Noise")
-noiseSlider.pack()
-          
-canvas = Canvas(root, width = 300, height = 400)      
-canvas.pack()      
-img = PhotoImage(file="prisoner.png")      
-canvas.create_image(150,70, anchor=N, image=img)
-
+# Title
 theLabel = Label(
-    root, text="Welcome to the Prisoner's Dilemma! \n",
-                font="Arial 20 bold")
+    root, text="\n\nWelcome to the Prisoner's Dilemma! \n",
+                font="Arial 24 bold")
 theLabel.pack(anchor=CENTER)
 
 theLabel = Label(
@@ -896,6 +941,41 @@ theLabel = Label(
                 + "click the 'Run Simulation' button to view the results.",
                 font="Arial 18")
 theLabel.pack(anchor=CENTER)
+
+# Logo
+canvas = Canvas(root, width = 300, height = 400)      
+canvas.pack()      
+img = PhotoImage(file="prisoner.png")      
+canvas.create_image(150,70, anchor=N, image=img)
+
+# Run Simulation, Select Rounds, Noise Sliders/Buttons
+
+
+
+rounds = Notebook(root, width=notebookWidth)
+rounds.pack()
+roundFrame = Frame(rounds)
+noiseFrame = Frame(rounds)
+
+roundsEntry = Spinbox(master=roundFrame, from_=1, to=10, width=4)
+roundsEntry.pack()
+
+roundsLabel = Label(master=roundFrame, text="Rounds to Play (Max 10):")
+roundsLabel.pack()
+
+runButton = Button(master=roundFrame, text="Run Simulation", highlightbackground="blue", highlightcolor="blue", font="Arial 20 bold",
+                   command=lambda: tournament.runTournament())  # add command
+runButton.pack()
+
+rounds.add(roundFrame, text='Run Simulation')
+rounds.add(noiseFrame, text='Noise')
+
+noiseSlider = strategySlider(master=noiseFrame, label="Noise")
+noiseSlider.pack()
+
+noiseInfoButton = infoButton(master=noiseFrame, command=lambda: info_window(
+    "Noise: Add noise to the simulations.    \n"))
+noiseInfoButton.pack()
 
 root.mainloop()
 # to keep GUI window open
