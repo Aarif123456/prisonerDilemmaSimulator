@@ -48,6 +48,7 @@ class tournament:
     strategies = ["always cooperate", "always defect", "tit-for-tat", "grudger", "choose randomly",
                   "soft majority", "hard majority", "Cyclical DDC", "Cyclical CCD", "Cyclical CD",
                   "mean tit-for-tat", "pavlov", "cooperative tit-for-tat", "hard tit-for-tat", "slow tit-for-tat", "gradual", "prober", "sneaky tit-for-tat", "forgetful grudger", "forgiving tit for tat",
+<<<<<<< HEAD
                   "generous tit-for-tat", "blahn"]
 
     #    OppositeGrudger, -cooperate if the opponent has ever cooperated 
@@ -64,6 +65,11 @@ class tournament:
     # ** future add min and max range for rounds and add reproductive points with genetic
     # forgiving tit-for-tat -> better in noise but more vulnerable
     def __init__(self, rounds: int, noiseVal: int):
+=======
+                  "generous tit-for-tat", "probability (set your own probability)"]   
+
+    def __init__(self, rounds: int):
+>>>>>>> 4082ecf8571ca659c3a975f434fcbed3db24e912
         self.numRounds = rounds
         # list of bots competing
         self.botList = []
@@ -575,15 +581,16 @@ class tournament:
             variance += pow(y - mean, 2)
         variance /= len(self.botList)
         standardDeviation = math.sqrt(variance)
-
-        newBotList = []
-        for bot in self.botList:
-            y = int(bot.getYears())
-            numKid = -round((y - mean) / standardDeviation)
-            for i in range(numKid):
-                newBotList.append(bot.getChild())
         self.numRounds = 0
-        self.botList = newBotList
+        if standardDeviation != 0 :
+            newBotList = []
+            for bot in self.botList:
+                y = int(bot.getYears())
+                numKid = -round((y - mean) / standardDeviation)
+                for i in range(numKid):
+                    newBotList.append(bot.getChild())
+            self.botList = newBotList
+      
 
     @staticmethod
     def runTournament():
