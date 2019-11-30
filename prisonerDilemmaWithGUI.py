@@ -48,9 +48,9 @@ class tournament:
     strategies = ["always cooperate", "always defect", "tit-for-tat", "grudger", "choose randomly",
                   "soft majority", "hard majority", "Cyclical DDC", "Cyclical CCD", "Cyclical CD",
                   "mean tit-for-tat", "pavlov", "cooperative tit-for-tat", "hard tit-for-tat", "slow tit-for-tat", "gradual", "prober", "sneaky tit-for-tat", "forgetful grudger", "forgiving tit for tat",
-                  "generous tit-for-tat", "probability (set your own probability)"]
+                  "generous tit-for-tat", "blahn"]
 
-    #    OppositeGrudger, -cooperate if the opponent has ever cooperated
+    #    OppositeGrudger, -cooperate if the opponent has ever cooperated 
     #    ForgetfulGrudger, -grudger but forgets after a set amount of time
 
     # "appeaser" - starts cooperating and switches every time opponent defects
@@ -63,11 +63,11 @@ class tournament:
     # add evolution, interactive, add signal error
     # ** future add min and max range for rounds and add reproductive points with genetic
     # forgiving tit-for-tat -> better in noise but more vulnerable
-    def __init__(self, rounds: int):
+    def __init__(self, rounds: int, noiseVal: int):
         self.numRounds = rounds
         # list of bots competing
         self.botList = []
-        self.noise = 0.0
+        self.noise = noiseVal
 
         # Sam
     def insertBots(botNum: int, numOfBots: int):
@@ -128,15 +128,15 @@ class tournament:
     # Get slider values and load bots into tournament
     def getSliderValue(sliderNum: int) -> int:
         if sliderNum == 1:
-            return 0  # TODO
+            return allCooperateSlider.get()
         if sliderNum == 2:
-            return 0  # TODO
+            return allDefectSlider.get()
         if sliderNum == 3:
             return tftSlider.get()
         if sliderNum == 4:
             return grudgerSlider.get()
         if sliderNum == 5:
-            return 0  # TODO
+            return randomSlider.get()
         if sliderNum == 6:
             return majSoftSlider.get()
         if sliderNum == 7:
@@ -156,19 +156,19 @@ class tournament:
         if sliderNum == 14:
             return tftHardSlider.get()
         if sliderNum == 15:
-            return 0  # TODO
+            return tftSlowSlider.get()
         if sliderNum == 16:
-            return 0  # TODO
+            return gradualSlider.get()
         if sliderNum == 17:
-            return 0  # TODO
+            return proberSlider.get()
         if sliderNum == 18:
-            return 0  # TODO
+            return tftSneakySlider.get()
         if sliderNum == 19:
             return grudgerForgetSlider.get()
+        if sliderNum == 20:
+            return tftForgiveSlider.get()
         if sliderNum == 21:
-            return 0  # TODO
-        if sliderNum == 22:
-            return 0  # TODO
+            return tftGenerousSlider.get()
         else:
             return 0
 
@@ -177,7 +177,7 @@ class tournament:
         self.noise = n
 
     def displayResult(self):  # moved here so could be called in runTournament
-        self.sortBot()
+        #self.sortBot()
         
         # dynamically created lists for switch case
         labels = []
@@ -204,6 +204,7 @@ class tournament:
         prober = []
         sneakyTFT = []
         grudgerForgetful = []
+        forgivingTFT = []
         generousTFT = []
 
         for bot in self.botList:
@@ -211,7 +212,7 @@ class tournament:
             if(bot.getName() == tournament.strategies[0]) :
                 alwaysCooperate.append(int(bot.getYears()))
                 if 'Always Cooperate' not in labels :
-                    labels.append('Always Coorperate')
+                    labels.append('Always Cooperate')
 
             elif(bot.getName() == tournament.strategies[1]) :
                 alwaysDefect.append(int(bot.getYears()))
@@ -304,6 +305,11 @@ class tournament:
                     labels.append('Forgetful Grudger')
 
             elif(bot.getName() == tournament.strategies[19]) :
+                forgivingTFT.append(int(bot.getYears()))
+                if 'Forgiving TFT' not in labels :
+                    labels.append('Forgiving TFT')
+
+            elif(bot.getName() == tournament.strategies[20]) :
                 generousTFT.append(int(bot.getYears()))
                 if 'Generous TFT' not in labels :
                     labels.append('Generous TFT')
@@ -314,11 +320,10 @@ class tournament:
 
         # Getting the minimum and maximum years spent in prison for every subset of strategies
 
-        #DO NOT HAVE
         if labels.__contains__("Always Cooperate") :
             minYears.append(min(alwaysCooperate))
             maxYears.append(max(alwaysCooperate))
-        #DO NOT HAVE
+
         if labels.__contains__("Always Defect") :
             minYears.append(min(alwaysDefect))
             maxYears.append(max(alwaysDefect))
@@ -331,7 +336,6 @@ class tournament:
             minYears.append(min(grudgerTraditional))
             maxYears.append(max(grudgerTraditional))
         
-        #DO NOT HAVE
         if labels.__contains__("Random") :
             minYears.append(min(chooseRandomly))
             maxYears.append(max(chooseRandomly))
@@ -372,32 +376,30 @@ class tournament:
             minYears.append(min(hardTFT))
             maxYears.append(max(hardTFT))
         
-        #DO NOT HAVE
         if labels.__contains__("Slow TFT") :
             minYears.append(min(slowTFT))
             maxYears.append(max(slowTFT))
         
-        #DO NOT HAVE
         if labels.__contains__("Gradual") :
             minYears.append(min(gradual))
             maxYears.append(max(gradual))
 
-        #DO NOT HAVE
         if labels.__contains__("Prober") :
             minYears.append(min(prober))
             maxYears.append(max(prober))
         
-        #DO NOT HAVE
         if labels.__contains__("Sneaky TFT") :
             minYears.append(min(sneakyTFT))
             maxYears.append(max(sneakyTFT))
 
-        #HAVE - DOESN'T WORK IN GUI
         if labels.__contains__("Forgetful Grudger") :
             minYears.append(min(grudgerForgetful))
             maxYears.append(max(grudgerForgetful))
+
+        if labels.__contains__("Forgiving TFT") :
+            minYears.append(min(forgivingTFT))
+            maxYears.append(max(forgivingTFT))
         
-        #DO NOT HAVE
         if labels.__contains__("Generous TFT") :
             minYears.append(min(generousTFT))
             maxYears.append(max(generousTFT))
@@ -422,7 +424,7 @@ class tournament:
             """Attach a text label above each bar in *rects*, displaying its height."""
             for rect in rects:
                 height = rect.get_height()
-                print("This is the height = " + str(height))
+                #print("This is the height = " + str(height))
                 ax.annotate('{}'.format(height),
                             xy=(rect.get_x() + rect.get_width() / 2, height),
                             xytext=(0, 3),  # 3 points vertical offset
@@ -516,37 +518,38 @@ class tournament:
                     move1 = strategy1.getMove(bot2Moves)
                     move2 = strategy2.getMove(bot1Moves)
                     # create noise
-                    if (random.uniform(0, 100) < self.noise):
+                    if (random.uniform(0, 10) < self.noise):
                         if (random.randint(0, 1) == 0):
                             move1 = False
                         else:
                             move1 = True
-                    if (random.uniform(0, 100) < self.noise):
+                    if (random.uniform(0, 10) < self.noise):
                         if (random.randint(0, 1) == 0):
                             move2 = False
                         else:
                             move2 = True
                     bot1Moves.append(move1)
                     bot2Moves.append(move2)
-                    # both cooperate they both go to jail for 2 years
+                    # both cooperate they both go to jail for 1 years
                     if (move1 == tournament.cooperate and move2 == tournament.cooperate):
+                        strategy1.addYears(1)
+                        strategy2.addYears(1)
+
+                    # both defect they both go to jail for 2 years
+                    if (move1 == tournament.defect and move2 == tournament.defect):
                         strategy1.addYears(2)
                         strategy2.addYears(2)
 
-                    # both defect they both go to jail for 5 years
-                    if (move1 == tournament.defect and move2 == tournament.defect):
-                        strategy1.addYears(5)
-                        strategy2.addYears(5)
-
-                    # if bot1 cooperates and bot 2 defects then bot1
-                    # goes to jail for 10 years while bot 2 gets to walk
+                    # if bot1 cooperates and bot2 defects then bot1
+                    # goes to jail for 10 years while bot2 gets to walk
                     if (move1 == tournament.cooperate and move2 == tournament.defect):
-                        strategy1.addYears(10)
+                        strategy1.addYears(3)
                         strategy2.addYears(0)
+
                     # same as third scenario in reverse
                     if (move1 == tournament.defect and move2 == tournament.cooperate):
                         strategy1.addYears(0)
-                        strategy2.addYears(10)
+                        strategy2.addYears(3)
 
     # ** sort bot from best to worse performing
     def sortBot(self):
@@ -585,7 +588,7 @@ class tournament:
     @staticmethod
     def runTournament():
         print(tftSlider.get())
-        mainTournament = tournament(int(roundsEntry.get()))
+        mainTournament = tournament(int(roundsEntry.get()), int(noiseSlider.get()))
         mainTournament.setUp()
         mainTournament.faceOff()
         mainTournament.displayResult()
@@ -604,7 +607,7 @@ notebookWidth = 225
 
 class strategySlider(Scale):
     def __init__(self, **kwargs):
-        Scale.__init__(self, orient=HORIZONTAL, length=170, **kwargs)
+        Scale.__init__(self, orient=HORIZONTAL, state=NORMAL, from_=0, to=10, length=170, **kwargs)
         self.pack()
 
 
@@ -743,20 +746,149 @@ grudgerForgetMemoryEntry = Spinbox(grudgerForget, from_=0, to=100, width=4)
 # TODO Connect to memory value
 grudgerForgetMemoryEntry.pack()
 
-theLabel = Label(
-    root, text="This is where graphs of \n the bots prison years accumulated \n will be displayed")
-theLabel.pack(anchor=CENTER)
-# Run Simulation Button
 
-roundsLabel = Label(root, text="Rounds to Play (Max 1000):")
+
+# TFT PART DEUX
+
+theLabel2 = Label(right, text="Tit-For-Tat")
+theLabel2.pack()
+
+tft2 = Notebook(right, width=notebookWidth)
+tft2.pack()
+tftSlow = Frame(tft2)
+tftSneaky = Frame(tft2)
+tftForgive = Frame(tft2)
+tftGenerous = Frame(tft2)
+
+tft2.add(tftSlow, text='Slow')
+tft2.add(tftSneaky, text='Sneaky')
+tft2.add(tftForgive, text='Forgiving')
+tft2.add(tftGenerous, text='Generous')
+
+tftSlowSlider = strategySlider(master=tftSlow, label="Slow")
+tftSlowSlider.pack()
+
+tftSneakySlider = strategySlider(master=tftSneaky, label="Sneaky")
+tftSneakySlider.pack()
+
+tftForgiveSlider = strategySlider(master=tftForgive, label="Forgiving")
+tftForgiveSlider.pack()
+
+tftGenerousSlider = strategySlider(master=tftGenerous, label="Generous")
+tftGenerousSlider.pack()
+
+# Always Bots
+
+alwaysLabel = Label(right, text="Always")
+alwaysLabel.pack()
+
+always = Notebook(right, width=notebookWidth)
+always.pack()
+allDefect = Frame(always)
+allCooperate = Frame(always)
+
+always.add(allDefect, text='Defect')
+always.add(allCooperate, text='Cooperate')
+
+allDefectSlider = strategySlider(master=allDefect, label='Defect')
+allDefectSlider.pack()
+
+allCooperateSlider = strategySlider(master=allCooperate, label='Cooperate')
+allCooperateSlider.pack()
+
+# randomBot
+
+randomLabel = LabelFrame(right, text="Random", width=notebookWidth)
+randomLabel.pack()
+
+randomSlider = strategySlider(master=randomLabel, label='Random')
+randomSlider.pack()
+
+ranInfoButton = infoButton(master=randomLabel, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+ranInfoButton.pack()
+
+# gradualBot
+
+gradualLabel = LabelFrame(right, text="Gradual", width=notebookWidth)
+gradualLabel.pack()
+
+gradualSlider = strategySlider(master=gradualLabel, label='Gradual')
+gradualSlider.pack()
+
+gradInfoButton = infoButton(master=gradualLabel, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+gradInfoButton.pack()
+
+# proberBot
+
+proberLabel = LabelFrame(right, text="Prober", width=notebookWidth)
+proberLabel.pack()
+
+proberSlider = strategySlider(master=proberLabel, label='Prober')
+proberSlider.pack()
+
+proInfoButton = infoButton(master=proberLabel, command=lambda: info_window(
+    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+proInfoButton.pack()
+
+# Limiting Sliders (Only 5 strategies at a time)
+
+sliderList = ['Always Cooperate', 'Always Defect', 'Tit-For-Tat',
+           'Traditional Grudger', 'Random', 'Soft Majority',
+           'Hard Majority', 'DDC', 'CCD',
+           'CD', 'Mean TFT', 'Pavlov', 
+           'Cooperative TFT', 'Hard TFT', 'Slow TFT',
+           'Gradual', 'Prober', 'Sneaky TFT',
+           'Forgetful Grudger', 'Forgiving TFT', 'Generous TFT']
+
+activeSliders = []
+
+valueArray = []
+
+sliderCount = 0
+
+
+def limitStrategies(val):
+    valueArray.append(val)
+    
+    for v in valueArray :
+        if (v != 0) :
+            sliderCount += 1
+        if (sliderCount >= 5) :
+            if (v == 0) :
+                print ("This is what happens when v == 0:")
+                
+# Run Simulation, Select Rounds, Noise Sliders/Buttons
+
+roundsLabel = Label(root, text="Rounds to Play (Max 10):")
 roundsLabel.pack()
-roundsEntry = Spinbox(root, from_=1, to=1000, width=4)
+roundsEntry = Spinbox(root, from_=1, to=10, width=4)
 roundsEntry.pack()
 
 runButton = Button(root, text="Run Simulation",
                    command=lambda: tournament.runTournament())  # add command
 runButton.pack()
 
+noiseSlider = strategySlider(label="Noise")
+noiseSlider.pack()
+          
+canvas = Canvas(root, width = 300, height = 400)      
+canvas.pack()      
+img = PhotoImage(file="prisoner.png")      
+canvas.create_image(150,70, anchor=N, image=img)
+
+theLabel = Label(
+    root, text="Welcome to the Prisoner's Dilemma! \n",
+                font="Arial 20 bold")
+theLabel.pack(anchor=CENTER)
+
+theLabel = Label(
+    root, text= "Select the number of bots for each strategy you would like to simulate. \n"
+                + "Once you have selected your strategies, \n"
+                + "click the 'Run Simulation' button to view the results.",
+                font="Arial 18")
+theLabel.pack(anchor=CENTER)
 
 root.mainloop()
 # to keep GUI window open
