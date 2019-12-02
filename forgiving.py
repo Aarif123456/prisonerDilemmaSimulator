@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator			
 # forgiver is a bot that will cooperate until the opponent has defected more than 10 % of the time
 from botBase import baseBot

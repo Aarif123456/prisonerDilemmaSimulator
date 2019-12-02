@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # main file that holds the AI tournament
 # import all the bots

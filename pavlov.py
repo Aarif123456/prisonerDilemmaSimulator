@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # the pavlov bot cooperates on the first move and defect if the players had two different previous move
 # this strategy is also called win-stay-lose-shift 

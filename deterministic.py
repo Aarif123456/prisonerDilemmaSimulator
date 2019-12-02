@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # Holds deterministic strategies as labeled in Dyson and Press' paper 
 # which can be found at https://www.pnas.org/content/109/26/10409

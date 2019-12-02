@@ -1,15 +1,3 @@
-# What's Left
-# Create sliders (and spinboxes if applicable) for remaining strategies (see TODOs in getSliderValue function)
-#              For this: use custom widget strategySlider(master=right, label="[strategy title]")
-#              See "Forgetful Grudger" for spinbox example
-# Display Results
-#       Number of years served is the same for each bot using the same strategy, so just display average years per bot per strategy (i.e. what one bot using each strategy served)?
-# Info boxes or hover text for strategy information?
-# (Sam can help with things if needed once we decide what to do)
-# Note: Need python 3.8 to import Tkinter
-
-
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # main file that holds the AI tournament
 # import all the bots
@@ -425,7 +413,7 @@ class tournament:
 
         plt.show()
 
-    def setUp(self):  # Sam: Run Simulation button runs this function!
+    def setUp(self): # Run Simulation button runs this function!
 
         i = 1
         for i in range(1, 21):
@@ -581,12 +569,7 @@ class tournament:
         mainTournament.faceOff()
         mainTournament.displayResult()
 
-# COMP 3710 Final AI Project
 # Prisoner's Dilemma Simulator GUI
-
-
-# import matplotlib        #use for displaying graphs?
-# matplotlib.use("TkAgg")
 
 notebookWidth = 225
 
@@ -974,7 +957,7 @@ noiseSlider = strategySlider(master=noiseFrame, label="Noise")
 noiseSlider.pack()
 
 noiseInfoButton = infoButton(master=noiseFrame, command=lambda: info_window(
-    "Noise: Add noise to the simulations.    \n"))
+    "Noise: Noise represents miscommunications that happen in everyday life.  For the set noise level, the simulator will disregard the bot's input and randomly defect or cooperate.\n"))
 noiseInfoButton.pack()
 
 root.mainloop()

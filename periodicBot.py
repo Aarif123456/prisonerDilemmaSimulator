@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # the periodic bot is a class of bots that will cycle through a given pattern
 # for the start I am going to use the pattern ddc, ccd and cd feel free to add your own cyclic pattern

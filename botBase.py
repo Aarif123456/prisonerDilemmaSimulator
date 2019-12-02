@@ -1,4 +1,3 @@
-#Abdullah Arif
 #COMP-3710 Final project Prisoner Dilemma simulator
 #base class for the bots so that they have some code in common
 # copy to make kids

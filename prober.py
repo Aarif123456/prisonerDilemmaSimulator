@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # the prober is a bot who plays dcc  then if the other opponent did not try to punish it it will defect forever other wise it plays as a tit-for-tat bot
 

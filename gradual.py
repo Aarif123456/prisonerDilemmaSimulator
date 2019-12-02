@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # the gradual bot is a bot who starts off cooperative and then retaliates by defecting n times for the nth defect it then gives it's opponent a chance to calm down by cooperating twice
 

@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # one move bot only either always defect or always cooperates
 from botBase import baseBot

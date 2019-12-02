@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # the grudger is a bot who starts out cooperating but if it was betrayed it always defects
 from botBase import baseBot

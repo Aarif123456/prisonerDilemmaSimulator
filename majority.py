@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # holds bots that look at the majority of the decision the opponent has
 from botBase import baseBot
