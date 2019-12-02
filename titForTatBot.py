@@ -1,4 +1,3 @@
-# Abdullah Arif
 # COMP-3710 Final project Prisoner Dilemma simulator
 # it can start off as either cooperating and defecting depending on the arguments
 # afterwards it will mirror the opponent
