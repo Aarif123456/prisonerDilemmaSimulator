@@ -41,7 +41,7 @@ class hardTitForTatBot(baseBot):
 			return baseBot.defect
 		return baseBot.cooperate
 
-#slow tit for tat starts of cooperating and defects if last two moves were defects then it needs to cooperates to make it calm down
+#slow tit for tat starts of cooperating and defects if last two moves were defects then it needs two cooperates to make it calm down
 class slowTitForTatBot(baseBot):
 	def __init__(self):
 		# bot inherits from base class and sets it's name
