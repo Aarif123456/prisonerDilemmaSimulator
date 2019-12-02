@@ -646,19 +646,19 @@ tftHardSlider = strategySlider(master=tftHard, label="Hard")
 tftHardSlider.pack()
 
 tradInfoButton = infoButton(master=tftTrad, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Traditional Tit-For-Tat\n\n    This strategy will begin by cooperating, then mirror its opponents' strategies.    \n"))
 tradInfoButton.pack()
 
 meanInfoButton = infoButton(master=tftMean, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Mean Tit-For-Tat\n\n    This strategy will begin by defecting, then mirror its opponents' strategies.    \n"))
 meanInfoButton.pack()
 
 coopInfoButton = infoButton(master=tftCoop, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Cooperative Tit-For-Tat\n\n    This strategy cooperates unless its opponent's previous two moves were defections, then it plays Tit-For-Tat.    \n"))
 coopInfoButton.pack()
 
 hardInfoButton = infoButton(master=tftHard, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Hard Tit-For-Tat\n\n    This strategy will cooperate until one of the opponent's last two moves was a defection, then it plays Tit-For-Tat.    \n"))
 hardInfoButton.pack()
 
 # Periodic Interface
@@ -687,15 +687,15 @@ cdSlider = strategySlider(master=periodicCD, label='Cooperate Defect')
 cdSlider.pack()
 
 DDCInfoButton = infoButton(master=periodicDDC, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "DDC\n\n    This strategy plays these moves in the following order on repeat: defect, defect, cooperate.    \n"))
 DDCInfoButton.pack()
 
 CCDInfoButton = infoButton(master=periodicCCD, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "CCD\n\n    This strategy plays these moves in the following order on repeat: cooperate, cooperate, defect.    \n"))
 CCDInfoButton.pack()
 
 CDInfoButton = infoButton(master=periodicCD, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "CD\n\n    This strategy alternates between cooperating and defecting.    \n"))
 CDInfoButton.pack()
 
 # Majority Bots
@@ -719,11 +719,11 @@ majSoftSlider = strategySlider(master=majSoft, label='Soft')
 majSoftSlider.pack()
 
 majHardInfoButton = infoButton(master=majHard, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Hard Majority \n\n    This strategy defects so long as the opponent defects more often than it cooperates.    \n"))
 majHardInfoButton.pack()
 
 majSoftInfoButton = infoButton(master=majSoft, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Soft Majority \n\n    This strategy cooperates so long as the opponent cooperates more often than it defects.     \n"))
 majSoftInfoButton.pack()
 
 # Pavlov Interface
@@ -741,7 +741,7 @@ pavlovSlider = strategySlider(master=Pavlov, label='Pavlov')
 pavlovSlider.pack()
 
 pavInfoButton = infoButton(master=Pavlov, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Pavlov \n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
 pavInfoButton.pack()
 
 # Grudger Interface
@@ -761,7 +761,7 @@ grudgerSlider = strategySlider(master=grudgerTrad, label='Grudger')
 grudgerSlider.pack()
 
 grudgeInfoButton = infoButton(master=grudgerTrad, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Grudger \n\n    This strategy begins by cooperating but will defect forever if it is defected against.    \n"))
 grudgeInfoButton.pack()
 
 # Forgetful Grudger
@@ -810,15 +810,15 @@ tftForgiveSlider.pack()
 #tftGenerousSlider.pack()
 
 slowInfoButton = infoButton(master=tftSlow, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Slow Tit-For-Tat \n\n    This strategy cooperates and only defects when the opponent's last two moves were defections. It then enters a cool-down mode where it cooperates for one round, then begins the cycle again.    \n"))
 slowInfoButton.pack()
 
 sneakyInfoButton = infoButton(master=tftSneaky, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Sneaky Tit-For-Tat \n\n    This strategy plays traditional Tit-For-Tat but will defect at random intervals. If the defection was retaliated against, this bot will cooperate for a round to make amends.    \n"))
 sneakyInfoButton.pack()
 
 forgiveInfoButton = infoButton(master=tftForgive, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Forgiving Tit-For-Tat t\n\n    This strategy will play Tit-For-Tat against any opponent that has defected more than 10% of the time, and will otherwise cooperate.    \n"))
 forgiveInfoButton.pack()
 
 # Always Bots
@@ -841,11 +841,11 @@ allCooperateSlider = strategySlider(master=allCooperate, label='Cooperate')
 allCooperateSlider.pack()
 
 defectInfoButton = infoButton(master=allDefect, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Defect \n\n    This strategy only defects.    \n"))
 defectInfoButton.pack()
 
 cooperateInfoButton = infoButton(master=allCooperate, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Cooperate \n\n    This strategy only cooperates.    \n"))
 cooperateInfoButton.pack()
 
 # randomBot
@@ -863,7 +863,7 @@ randomSlider = strategySlider(master=Rand, label='Random')
 randomSlider.pack()
 
 ranInfoButton = infoButton(master=Rand, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Random \n\n    This strategy defects and cooperates randomly.    \n"))
 ranInfoButton.pack()
 
 # gradualBot
@@ -881,7 +881,7 @@ gradualSlider = strategySlider(master=Gradual, label='Gradual')
 gradualSlider.pack()
 
 gradInfoButton = infoButton(master=Gradual, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Gradual \n\n    This strategy tracks the number of times its opponent has defected against them, and defects that number of times when defected against. Following a defection, it cooperates twice in a row.    \n"))
 gradInfoButton.pack()
 
 # proberBot
@@ -899,7 +899,7 @@ proberSlider = strategySlider(master=Prober, label='Prober')
 proberSlider.pack()
 
 proInfoButton = infoButton(master=Prober, command=lambda: info_window(
-    "Pavlov\n\n    This strategy plays DCC, then switches to a Tit-For-Tat style    \n"))
+    "Prober\n\n    This strategy plays DCC, then defects continuously if it was not defected against in the first three rounds. If it was defected against in the first three rounds, it plays Tit-For-Tat    \n"))
 proInfoButton.pack()
 
 # Limiting Sliders (Only 5 strategies at a time)
